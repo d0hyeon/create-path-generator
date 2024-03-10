@@ -1,0 +1,9 @@
+node_modules/
+src/ 
+.babelrc
+.gitignore
+rollup.config.mjs
+tsconfig.json
+yarn.lock
+.npmignore
+.vscode/

@@ -1,0 +1,16 @@
+{
+  "include": [
+    "./src/**/**.ts",
+    "./src/**.ts"
+  ],
+  "compilerOptions": {
+    "target": "ES6",
+    "moduleResolution": "Node",
+    "lib": [
+      "WebWorker",
+      "DOM",
+      "ESNext"
+    ],
+    "declaration": true,
+  },
+}

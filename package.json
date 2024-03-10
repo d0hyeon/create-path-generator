@@ -1,0 +1,24 @@
+{
+  "name": "path-variable",
+  "description": "Easy processing of path variable",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/d0hyeon/create-path-generator"
+  },
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.4.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "5.2"
+  },
+  "dependencies": {}
+}
