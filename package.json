@@ -1,14 +1,14 @@
 {
   "name": "path-variable",
   "description": "Easy processing of path variable",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/d0hyeon/create-path-generator"
+    "url": "https://github.com/d0hyeon/path-variable"
   },
   "scripts": {
     "build": "rollup -c"
