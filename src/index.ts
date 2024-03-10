@@ -1,9 +1,9 @@
 import { createPathGenerator, createPattern } from "./createPathGenerator";
-import { GeneratePathVariablePattern } from "./types";
+import { PathVariable as PathVariableByPattern } from "./types";
 
 const pattern = createPattern(':');
 export const generatePath = createPathGenerator(pattern);
-export type PathVariable<Path extends string> = GeneratePathVariablePattern<
+export type PathVariable<Path extends string> = PathVariableByPattern<
   Path,
   typeof pattern[0],
   typeof pattern[1]

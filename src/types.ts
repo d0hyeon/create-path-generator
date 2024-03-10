@@ -1,13 +1,13 @@
 export type PathValue = string | number;
-export type GeneratePathVariablePattern<
+export type PathVariable<
   Path extends string,
   Prefix extends string,
   Postfix extends string = ''
 > = Path extends `${string}/${Prefix}${infer Key}${Postfix}/${infer Tail}`
-  ? Record<Key, PathValue> & GeneratePathVariablePattern<Tail, Prefix, Postfix>
-  : RestPathVariables<Path, Prefix, Postfix>;
+  ? Record<Key, PathValue> & PathVariable<Tail, Prefix, Postfix>
+  : RestPathVariable<Path, Prefix, Postfix>;
 
-type RestPathVariables<
+type RestPathVariable<
   Path extends string,
   Prefix extends string,
   Postfix extends string | undefined
