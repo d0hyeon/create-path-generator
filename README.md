@@ -1,4 +1,4 @@
-# Create Path Generator
+# Path Variable
 
 ## Example
 **Default**
