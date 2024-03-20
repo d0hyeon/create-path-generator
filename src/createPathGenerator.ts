@@ -1,4 +1,4 @@
-import { PathVariable, PathValue } from "./types";
+import { PathVariable, PathValue, SerializePath } from "./types";
 
 type Pattern = Readonly<[string, string]>;
 const EmptyString = '';
@@ -25,11 +25,20 @@ type MergePathVariableByPattern<
   ? PathVariable<Path, Item[0], Item[1]> & MergePathVariableByPattern<Path, Rest>
   : Record<never, never>;
 
+type SerializePathByPatterns<
+  Path extends string,
+  Patterns extends ReadonlyArray<Pattern>,
+  Variable extends Record<string, PathValue>
+> = Patterns extends [infer Item extends Pattern, ...infer Rest extends ReadonlyArray<Pattern>]
+  ? Exclude<SerializePath<Path, Item[0], Item[1], Variable> | SerializePathByPatterns<Path, Rest, Variable>, Path | never>
+  : never;
+
+
 export function createPathGenerator<Patterns extends ReadonlyArray<Pattern>>(...patterns: Patterns) {
-  function generatePath<const Path extends string>(
-    path: Path,
-    variables: MergePathVariableByPattern<Path, Patterns>
-  ) {
+  function generatePath<
+    const Path extends string,
+    const Variable extends Record<keyof MergePathVariableByPattern<Path, Patterns>, PathValue>
+  >(path: Path, variables: Variable) {
     return Object.entries(variables).reduce((acc, [key, variable]) => {
       const regexps = patterns.map(([prefix, postfix]) => {
         if (postfix === EmptyString) {
@@ -40,7 +49,7 @@ export function createPathGenerator<Patterns extends ReadonlyArray<Pattern>>(...
       const regexp = new RegExp(regexps.join('|'), 'g');
 
       return acc.replace(regexp, (variable as PathValue).toString());
-    }, path as string);
+    }, path) as SerializePathByPatterns<Path, Patterns, Variable>
   }
 
   return generatePath;
