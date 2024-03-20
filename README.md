@@ -11,11 +11,11 @@ generatePath('/users/:userId', { userId: 1 });
 
 **Customizing** 
 ```ts
-import { createPattern, createPathGenerator } from 'path-variable';
+import { createVariablePattern, createPathGenerator } from 'path-variable';
 
 const PathVariablePattern = {
-  DEFAULT: createPattern(':'),
-  FOR_NEXT_DYNAMIC_ROUTE: createPattern('[', ']')
+  DEFAULT: createVariablePattern(':'),
+  FOR_NEXT_DYNAMIC_ROUTE: createVariablePattern('[', ']')
 }
 export const generatePath = createPathGenerator(
   PathVariablePattern.DEFAULT,

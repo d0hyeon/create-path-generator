@@ -4,12 +4,12 @@ type Pattern = Readonly<[string, string]>;
 const EmptyString = '';
 type EmptyString = typeof EmptyString;
 
-export function createPattern<Prefix extends string>(prefix: Prefix): readonly [Prefix, EmptyString];
-export function createPattern<Prefix extends string, Postfix extends string>(
+export function createVariablePattern<Prefix extends string>(prefix: Prefix): readonly [Prefix, EmptyString];
+export function createVariablePattern<Prefix extends string, Postfix extends string>(
   prefix: Prefix,
   postfix: Postfix
 ): readonly [Prefix, Postfix];
-export function createPattern<
+export function createVariablePattern<
   Prefix extends string,
   Postfix extends string = EmptyString
 >(prefix: Prefix, postfix?: Postfix) {
