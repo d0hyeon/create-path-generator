@@ -3,18 +3,15 @@
 ## Description
 Replace the path with params and infer the params from the path   
 <br />
-<br />
 
 ## Table Of Content
  - [Example](#Example)
  - [Usage](#Usage)
  - [API](#API)
 <br />
-<br />
 
 ## Example
 [CodeSandbox](https://codesandbox.io/p/sandbox/ts-pattern-params-kzykks?file=%2Fsrc%2Findex.ts%3A1%2C1)
-<br />
 <br />
 
 ## Usage
