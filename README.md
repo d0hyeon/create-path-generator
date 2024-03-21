@@ -1,7 +1,7 @@
-# TS-Path-Params
+# Path Params
 
 ## Description
-Replace the path with params and infer the params from the path   
+This module is utility module to replace path with params and infer the params from the path 
 <br />
 
 ## Table Of Content
@@ -12,7 +12,7 @@ Replace the path with params and infer the params from the path
 
 ## Example
 [CodeSandbox](https://codesandbox.io/p/sandbox/ts-pattern-params-kzykks?file=%2Fsrc%2Findex.ts%3A1%2C1)
-<br />
+
 <br />
 
 ## Usage
@@ -37,21 +37,20 @@ generatePath('/users/[userId]', { userId: 1 });
 // => "/users/1"
 ```
 <br />   
-<br />
 
 ## API
-### generatePath(path: string, params: object): string
+### generatePath(path, params)
  `generatePath` replaces path with params  
 ```ts
   generatePath('/user/:userId', { userId: 1 });
 ```
  
-### createParamsPattern(prefix: string, postfix?: string): ParamPattern
+### createParamsPattern(prefix, postfix)
  return value is `ParamPattern` and used for `createSerializer`  
   - `/user/:userId` => `createParamsPattern(':')`
   - `/user/[userId]` => `createParamsPattern('[', ']')`
 
-### createSerializer(...args: ParamPattern): Function
+### createSerializer(...patterns)
  `createSerializer` create the `generatePath` function.   
   Created function will replaces path by pattern 
 ```ts
