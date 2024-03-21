@@ -1,15 +1,22 @@
 {
   "name": "ts-path-params",
   "description": "Typescript infer path params",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/d0hyeon/path-variable"
+    "url": "https://github.com/d0hyeon/ts-path-params"
   },
+  "keywords": [
+    "typescript",
+    "ts",
+    "path",
+    "params",
+    "path-params"
+  ],
   "scripts": {
     "build": "rollup -c"
   },

@@ -1,4 +1,4 @@
-# Path Variable
+# TS-Path-Params
 
 ## Description
 Replace the path with params and infer the params from the path   
@@ -23,8 +23,6 @@ generatePath('/users/:userId', { userId: 1 }); // => "/users/1"
 
 ### Customizing
 ```ts
-import { createParamsPattern, createSerializer } from 'path-variable';
-
 const PathParamsPattern = {
   Default: createParamsPattern(':'),
   NextJSRoute: createParamsPattern('[', ']')
