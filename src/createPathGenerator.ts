@@ -22,7 +22,7 @@ type MergePathVariableByPattern<
   Path extends string,
   Patterns extends ReadonlyArray<Pattern>
 > = Patterns extends [infer Item extends Pattern, ...infer Rest extends ReadonlyArray<Pattern>]
-  ? PathVariable<Path, Item[0], Item[1]> & MergePathVariableByPattern<Path, Rest>
+  ? { [key in keyof PathVariable<Path, Item[0], Item[1]> | keyof MergePathVariableByPattern<Path, Rest>]: PathVariableValue }
   : Record<never, never>;
 
 type SerializePathByPatterns<
@@ -37,8 +37,11 @@ type SerializePathByPatterns<
 export function createPathGenerator<Patterns extends ReadonlyArray<Pattern>>(...patterns: Patterns) {
   function generatePath<
     const Path extends string,
-    const Variable extends Record<keyof MergePathVariableByPattern<Path, Patterns>, PathVariableValue>
+    const Variable extends MergePathVariableByPattern<Path, Patterns>
   >(path: Path, variables: Variable) {
+    type SerializedVariable = { [key in keyof Variable]: string };
+    type SerializedPath = SerializePathByPatterns<Path, Patterns, SerializedVariable>;
+
     return Object.entries(variables).reduce((acc, [key, variable]) => {
       const regexps = patterns.map(([prefix, postfix]) => {
         if (postfix === EmptyString) {
@@ -49,7 +52,7 @@ export function createPathGenerator<Patterns extends ReadonlyArray<Pattern>>(...
       const regexp = new RegExp(regexps.join('|'), 'g');
 
       return acc.replace(regexp, (variable as PathVariableValue).toString());
-    }, path) as SerializePathByPatterns<Path, Patterns, Variable>
+    }, path) as SerializedPath;
   }
 
   return generatePath;
