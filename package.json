@@ -1,7 +1,7 @@
 {
-  "name": "path-variable",
-  "description": "Easy processing of path variable",
-  "version": "0.0.4",
+  "name": "ts-path-params",
+  "description": "Typescript infer path params",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
