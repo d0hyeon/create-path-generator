@@ -1,49 +1,38 @@
-import { PathVariable, PathVariableValue, SerializePath } from "./types";
+import { ParamPattern, PathVariable, PathVariableValue } from "./types";
 
 type Pattern = Readonly<[string, string]>;
-const EmptyString = '';
-type EmptyString = typeof EmptyString;
+const EmptyStr = '';
+type EmptyStr = typeof EmptyStr;
 
-export function createParamsPattern<Prefix extends string>(prefix: Prefix): readonly [Prefix, EmptyString];
+export function createParamsPattern<Prefix extends string>(prefix: Prefix): ParamPattern<Prefix, EmptyStr>
 export function createParamsPattern<Prefix extends string, Postfix extends string>(
   prefix: Prefix,
   postfix: Postfix
-): readonly [Prefix, Postfix];
+): ParamPattern<Prefix, Postfix>
 export function createParamsPattern<
   Prefix extends string,
-  Postfix extends string = EmptyString
+  Postfix extends string = EmptyStr
 >(prefix: Prefix, postfix?: Postfix) {
   return postfix == null
-    ? [prefix, EmptyString] as const
+    ? [prefix, EmptyStr] as const
     : [prefix, postfix] as const;
 }
 
-type MergePathVariableByPattern<
+type MergePathVariables<
   Path extends string,
-  ParamPatterns extends ReadonlyArray<Pattern>
-> = ParamPatterns extends [infer Item extends Pattern, ...infer Rest extends ReadonlyArray<Pattern>]
-  ? { [key in keyof PathVariable<Path, Item[0], Item[1]> | keyof MergePathVariableByPattern<Path, Rest>]: PathVariableValue }
+  Patterns extends ReadonlyArray<ParamPattern>
+> = Patterns extends [infer Pattern extends ParamPattern, ...infer Rest extends ReadonlyArray<Pattern>]
+  ? { [key in keyof PathVariable<Path, Pattern> | keyof MergePathVariables<Path, Rest>]: PathVariableValue }
   : Record<never, never>;
 
-type SerializePathByParamPatterns<
-  Path extends string,
-  ParamPatterns extends ReadonlyArray<Pattern>,
-  Variable extends Record<string, PathVariableValue>
-> = ParamPatterns extends [infer Item extends Pattern, ...infer Rest extends ReadonlyArray<Pattern>]
-  ? Exclude<SerializePath<Path, Item[0], Item[1], Variable> | SerializePathByParamPatterns<Path, Rest, Variable>, Path | never>
-  : never;
-
-
 export function createSerializer<ParamPatterns extends ReadonlyArray<Pattern>>(...patterns: ParamPatterns) {
-  function generatePath<
-    const Path extends string,
-    const Variable extends MergePathVariableByPattern<Path, ParamPatterns>
-  >(path: Path, variables: Variable) {
-    type SerializedPath = SerializePathByParamPatterns<Path, ParamPatterns, Variable>;
-
+  function generatePath<const Path extends string>(
+    path: Path,
+    variables: MergePathVariables<Path, ParamPatterns>
+  ) {
     return Object.entries(variables).reduce((acc, [key, variable]) => {
       const regexps = patterns.map(([prefix, postfix]) => {
-        if (postfix === EmptyString) {
+        if (postfix === EmptyStr) {
           return `(\\${prefix}${key})`
         }
         return `(\\${prefix}${key}\\${postfix})`
@@ -51,7 +40,7 @@ export function createSerializer<ParamPatterns extends ReadonlyArray<Pattern>>(.
       const regexp = new RegExp(regexps.join('|'), 'g');
 
       return acc.replace(regexp, (variable as PathVariableValue).toString());
-    }, path) as SerializedPath;
+    }, path);
   }
 
   return generatePath;
