@@ -1,29 +1,29 @@
 # Path Variable
 
 ## Description
-Replace the path with params and infer the params from the path
-   
-
+Replace the path with params and infer the params from the path   
+<br />
+<br />
 
 ## Table Of Content
  - [Example](#Example)
  - [Usage](#Usage)
  - [API](#API)
-   
-
+<br />
+<br />
 
 ## Example
 [CodeSandbox](https://codesandbox.io/p/sandbox/ts-pattern-params-kzykks?file=%2Fsrc%2Findex.ts%3A1%2C1)
-
-
+<br />
+<br />
 
 ## Usage
-**Default**
+### Default
 ```ts
 generatePath('/users/:userId', { userId: 1 }); // => "/users/1"
 ```
 
-**Customizing** 
+### Customizing
 ```ts
 import { createParamsPattern, createSerializer } from 'path-variable';
 
@@ -40,22 +40,22 @@ generatePath('/users/:userId', { userId: 1 });
 generatePath('/users/[userId]', { userId: 1 });
 // => "/users/1"
 ```
-   
+<br />   
+<br />
 
-   
 ## API
-**generatePath(path: string, params: object): string**  
+### generatePath(path: string, params: object): string
  `generatePath` replaces path with params  
 ```ts
   generatePath('/user/:userId', { userId: 1 });
 ```
  
-**createParamsPattern(prefix: string, postfix?: string): ParamPattern**  
+### createParamsPattern(prefix: string, postfix?: string): ParamPattern
  return value is `ParamPattern` and used for `createSerializer`  
   - `/user/:userId` => `createParamsPattern(':')`
   - `/user/[userId]` => `createParamsPattern('[', ']')`
 
-**createSerializer(...args: ParamPattern): Function**  
+### createSerializer(...args: ParamPattern): Function
  `createSerializer` create the `generatePath` function.   
   Created function will replaces path by pattern 
 ```ts
@@ -66,7 +66,7 @@ generatePath('/users/[userId]', { userId: 1 });
   genreatePath('/user/:userId', { userId: 1 });
   genreatePath('/user/[userId]', { userId: 1 });
 ```
-**type PathVariable<Path,Pattern?>**  
+### type PathVariable<Path, Pattern?>
 `PathVariable` infer a type from path.
 ```ts
   type MyParams = PathVariable<'/user/:userId'>; // { userId: string | number }
