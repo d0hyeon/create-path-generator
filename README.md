@@ -42,18 +42,19 @@ generatePath('/users/[userId]', { userId: 1 });
 **generatePath(path: string, params: object): string** 
  `generatePath` replaces path with params
 ```ts
-  const path = generatePath('/user/:userId', { userId: 1 });
-  // "/user/1"
+  // @example
+  generatePath('/user/:userId', { userId: 1 });
 ```
  
-**createParamsPattern(prefix: string, postfix?: string)**
+**createParamsPattern(prefix: string, postfix?: string): ParamPattern**
  return value is `ParamPattern` and used for `createSerializer`
   - `/user/:userId` => `createParamsPattern(':')`
   - `/user/[userId]` => `createParamsPattern('[', ']')`
 
-**createSerializer(...args: ParamPattern)**
- `createSerializer` create a `generatePath` function and created function will replaces path by pattern
+**createSerializer(...args: ParamPattern): Function**
+ `createSerializer` create the `generatePath` function. Created function will replaces path by pattern
 ```ts
+  // @example
   const generatePattern = createSerializer(
     createParamsPattern(':'),
     createParamsPattern('[', ']')
