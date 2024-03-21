@@ -23,13 +23,13 @@ generatePath('/users/:userId', { userId: 1 }); // => "/users/1"
 ```ts
 import { createParamsPattern, createSerializer } from 'path-variable';
 
-const PathVariablePattern = {
+const PathParamsPattern = {
   Default: createParamsPattern(':'),
   NextJSRoute: createParamsPattern('[', ']')
 }
 export const generatePath = createSerializer(
-  PathVariablePattern.Default,
-  PathVariablePattern.NextJSRoute
+  PathParamsPattern.Default,
+  PathParamsPattern.NextJSRoute
 )
 
 generatePath('/users/:userId', { userId: 1 });
