@@ -39,8 +39,7 @@ export function createSerializer<ParamPatterns extends ReadonlyArray<Pattern>>(.
     const Path extends string,
     const Variable extends MergePathVariableByPattern<Path, ParamPatterns>
   >(path: Path, variables: Variable) {
-    type SerializedVariable = { [key in keyof Variable]: string };
-    type SerializedPath = SerializePathByParamPatterns<Path, ParamPatterns, SerializedVariable>;
+    type SerializedPath = SerializePathByParamPatterns<Path, ParamPatterns, Variable>;
 
     return Object.entries(variables).reduce((acc, [key, variable]) => {
       const regexps = patterns.map(([prefix, postfix]) => {
