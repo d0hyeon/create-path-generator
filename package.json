@@ -1,7 +1,7 @@
 {
   "name": "ts-path-params",
   "description": "Typescript infer path params",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
