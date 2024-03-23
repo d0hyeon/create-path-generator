@@ -1,6 +1,5 @@
 import { ParamPattern, PathVariable, PathVariableValue } from "./types";
 
-type Pattern = Readonly<[string, string]>;
 const EmptyStr = '';
 type EmptyStr = typeof EmptyStr;
 
@@ -21,11 +20,11 @@ export function createParamsPattern<
 type MergePathVariables<
   Path extends string,
   Patterns extends ReadonlyArray<ParamPattern>
-> = Patterns extends [infer Pattern extends ParamPattern, ...infer Rest extends ReadonlyArray<Pattern>]
+> = Patterns extends [infer Pattern extends ParamPattern, ...infer Rest extends ReadonlyArray<ParamPattern>]
   ? { [key in keyof PathVariable<Path, Pattern> | keyof MergePathVariables<Path, Rest>]: PathVariableValue }
   : Record<never, never>;
 
-export function createSerializer<ParamPatterns extends ReadonlyArray<Pattern>>(...patterns: ParamPatterns) {
+export function createPathGenerator<ParamPatterns extends ReadonlyArray<ParamPattern>>(...patterns: ParamPatterns) {
   function generatePath<const Path extends string>(
     path: Path,
     variables: MergePathVariables<Path, ParamPatterns>
