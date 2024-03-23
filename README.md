@@ -18,7 +18,8 @@ This module is utility module to replace path with params and infer the params f
 ## Usage
 ### Default
 ```ts
-generatePath('/users/:userId', { userId: 1 }); // => "/users/1"
+generatePath('/users/:userId', { userId: 1 }); // "/users/1"
+type Params = PathVariable<'/users/:userId'> // { userId: string | number }
 ```
 
 ### Customizing
@@ -34,7 +35,7 @@ const generatePath = createPathGenerator(
 
 generatePath('/users/:userId', { userId: 1 });
 generatePath('/users/[userId]', { userId: 1 });
-// => "/users/1"
+type Params = PathVariable<'/users/[userId]', typeof PathParamsPattern.NextJSRoute>
 ```
 <br />   
 
