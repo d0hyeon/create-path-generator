@@ -27,7 +27,7 @@ const PathParamsPattern = {
   Default: createParamsPattern(':'),
   NextJSRoute: createParamsPattern('[', ']')
 }
-const generatePath = createSerializer(
+const generatePath = createPathGenerator(
   PathParamsPattern.Default,
   PathParamsPattern.NextJSRoute
 )
@@ -45,16 +45,16 @@ generatePath('/users/[userId]', { userId: 1 });
   generatePath('/user/:userId', { userId: 1 });
 ```
  
-### createParamsPattern(prefix, postfix)
- return value is `ParamPattern` and used for `createSerializer`  
+### createParamsPattern(prefix, postfix?)
+ return value is `ParamPattern` and used for `createPathGenerator`  
   - `/user/:userId` => `createParamsPattern(':')`
   - `/user/[userId]` => `createParamsPattern('[', ']')`
 
-### createSerializer(...patterns)
- `createSerializer` create the `generatePath` function.   
-  Created function will replaces path by pattern 
+### createPathGenerator(...patterns)
+ `createPathGenerator` creates the `generatePath` function.   
+  Created function replaces path by pattern 
 ```ts
-  const genreatePath = createSerializer(
+  const genreatePath = createPathGenerator(
     createParamsPattern(':'),
     createParamsPattern('[', ']')
   )
@@ -62,12 +62,13 @@ generatePath('/users/[userId]', { userId: 1 });
   genreatePath('/user/[userId]', { userId: 1 });
 ```
 ### type PathVariable<Path, Pattern?>
-`PathVariable` infer a type from path.
+`PathVariable` infers the type from the path.
 ```ts
-  type MyParams = PathVariable<'/user/:userId'>; // { userId: string | number }
-  type MySecondParams = PathVariable<
-    '/user/[userId]', 
-    typeof createParamsPattern('[', ']')
-  > // { userId: string | number }
+  type MyParams = PathVariable<'/user/:userId'>; 
+  // { userId: string | number }
+
+  const pattern = createParamsPattern('[', ']');
+  type MySecondParams = PathVariable<'/user/[userId]', typeof pattern> 
+  // { userId: string | number }
 ```
 
