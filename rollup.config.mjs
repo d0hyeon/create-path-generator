@@ -1,5 +1,5 @@
 
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 
 
