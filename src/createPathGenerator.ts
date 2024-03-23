@@ -25,10 +25,13 @@ type MergePathVariables<
   : Record<never, never>;
 
 export function createPathGenerator<ParamPatterns extends ReadonlyArray<ParamPattern>>(...patterns: ParamPatterns) {
-  type PathVariable<Path extends string> = MergePathVariables<Path, ParamPatterns>;
+  type VariableByPattern<Path extends string> = MergePathVariables<Path, ParamPatterns>;
+
   function generatePath<const Path extends string>(
     path: Path,
-    variable: keyof PathVariable<Path> extends never ? never : PathVariable<Path>,
+    variable: keyof VariableByPattern<Path> extends never
+      ? never
+      : VariableByPattern<Path>
   ) {
     return Object.entries(variable).reduce((acc, [key, value]) => {
       const regexps = patterns.map(([prefix, postfix]) => {
