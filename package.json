@@ -1,6 +1,6 @@
 {
   "name": "ts-path-params",
-  "description": "Typescript infer path params",
+  "description": "Typescript utility library for dynamic path parameter",
   "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
